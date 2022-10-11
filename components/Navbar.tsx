@@ -10,6 +10,13 @@ import Link from "next/link";
 
 import { ReactNode } from "react";
 
+export interface NavigationItem {
+  url?: string;
+  external?: boolean;
+  icon: ReactNode;
+  tooltip: string;
+  onClick?(): any;
+}
 export interface NavItemsProp {
   url?: string;
   external?: boolean;
@@ -54,7 +61,7 @@ const Navbar = ({
   setDocumentLanguage,
 }: NavbarProps) => {
   return (
-    <>
+    <div className="sticky w-full top-0 z-10">
       <div className="bg-[#161B22] text-white sticky w-full flex items-center py-4 justify-between px-2 lg:px-[220px]">
         <div className="px-2 text-lg">Nextbin</div>
         <div className="flex">
@@ -86,7 +93,7 @@ const Navbar = ({
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Navbar;

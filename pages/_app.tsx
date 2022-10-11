@@ -2,10 +2,8 @@ import "../styles/globals.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
-import { useRouter } from "next/router";
 
 function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
   return (
     <>
       <Head>
@@ -20,6 +18,10 @@ function App({ Component, pageProps }: AppProps) {
           content="free, fast, and easy pastebin service"
         />
       </Head>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github-dark.min.css"
+      />
       <Layout>
         <Component {...pageProps} />
       </Layout>

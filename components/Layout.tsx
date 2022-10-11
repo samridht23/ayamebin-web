@@ -1,5 +1,10 @@
 import Navbar from "./Navbar";
-const Layout = ({ children }) => {
+import { ReactNode } from "react";
+
+export interface LayoutProps {
+  children: ReactNode;
+}
+const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Navbar />
