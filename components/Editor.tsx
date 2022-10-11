@@ -1,154 +1,111 @@
-import Highlight from "react-highlight";
+const test = `import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import Image from "next/image";
+import AvatarImage from "../../public/eric.svg";
+import cx from "classnames";
+import { ReactNode } from "react";
+import {
+  FileIcon,
+  MixerHorizontalIcon,
+  ExitIcon,
+  ArchiveIcon,
+} from "@radix-ui/react-icons";
 
-const test = `use crate::{library::LibraryContext, prisma::volume::*};
-
-use rspc::Type;
-use serde::{Deserialize, Serialize};
-use std::process::Command;
-use sysinfo::{DiskExt, System, SystemExt};
-use thiserror::Error;
-
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Type)]
-pub struct Volume {
-	pub name: String,
-	pub mount_point: String,
-	pub total_capacity: u64,
-	pub available_capacity: u64,
-	pub is_removable: bool,
-	pub disk_type: Option<String>,
-	pub file_system: Option<String>,
-	pub is_root_filesystem: bool,
+interface RadixMenuItem {
+  label: string;
+  icon?: ReactNode;
 }
 
-#[derive(Error, Debug)]
-pub enum VolumeError {
-	#[error("Database error: {0}")]
-	DatabaseErr(#[from] prisma_client_rust::QueryError),
-	#[error("FromUtf8Error: {0}")]
-	FromUtf8Error(#[from] std::string::FromUtf8Error),
-}
+const generalMenuItems: RadixMenuItem[] = [
+  {
+    label: "Dashboard",
+    icon: <FileIcon className="mr-2 h-3.5 w-3.5" />,
+  },
+  {
+    label: "Catalog",
+    icon: <ArchiveIcon className="mr-2 h-3.5 w-3.5" />,
+  },
+];
 
-impl From<VolumeError> for rspc::Error {
-	fn from(e: VolumeError) -> Self {
-		rspc::Error::with_cause(rspc::ErrorCode::InternalServerError, e.to_string(), e)
-	}
-}
+const UserMenuItem: RadixMenuItem[] = [
+  {
+    label: "Settings",
+    icon: <MixerHorizontalIcon className="mr-2 h-3.5 w-3.5" />,
+  },
+  {
+    label: "Logout",
+    icon: <ExitIcon className="mr-2 h-3.5 w-3.5" />,
+  },
+];
 
-pub async fn save_volume(ctx: &LibraryContext) -> Result<(), VolumeError> {
-	let volumes = get_volumes()?;
+const DropdownMenu = () => {
+  return (
+    <div className="flex inline-block ">
+      <DropdownMenuPrimitive.Root>
+        <DropdownMenuPrimitive.Trigger className="rounded-full">
+          <span className="flex">
+            <Image src={AvatarImage} />
+          </span>
+        </DropdownMenuPrimitive.Trigger>
 
-	// enter all volumes associate with this client add to db
-	for volume in volumes {
-		ctx.db
-			.volume()
-			.upsert(
-				node_id_mount_point_name(
-					ctx.node_local_id,
-					volume.mount_point.to_string(),
-					volume.name.to_string(),
-				),
-				(
-					ctx.node_local_id,
-					volume.name,
-					volume.mount_point,
-					vec![
-						disk_type::set(volume.disk_type.clone()),
-						filesystem::set(volume.file_system.clone()),
-						total_bytes_capacity::set(volume.total_capacity.to_string()),
-						total_bytes_available::set(volume.available_capacity.to_string()),
-					],
-				),
-				vec![
-					disk_type::set(volume.disk_type),
-					filesystem::set(volume.file_system),
-					total_bytes_capacity::set(volume.total_capacity.to_string()),
-					total_bytes_available::set(volume.available_capacity.to_string()),
-				],
-			)
-			.exec()
-			.await?;
-	}
-	// cleanup: remove all unmodified volumes associate with this client
+        <DropdownMenuPrimitive.Portal>
+          <DropdownMenuPrimitive.Content
+            align="end"
+            sideOffset={5}
+            className={cx(
+              " radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down",
+              "w-48 rounded-lg px-1.5 py-1 shadow-md",
+              "bg-white "
+            )}
+          >
+            {generalMenuItems.map(({ label, icon }, i) => (
+              <DropdownMenuPrimitive.Item
+                className={cx(
+                  "flex cursor-default select-none items-center rounded-md px-2 py-2 text-sm outline-none",
+                  "text-gray-500 focus:text-gray-500 focus:bg-gray-200 "
+                )}
+              >
+                {icon}
+                <span className="flex-grow text-gray-700">{label}</span>
+              </DropdownMenuPrimitive.Item>
+            ))}
 
-	Ok(())
-}
+            <DropdownMenuPrimitive.Separator className="my-1 h-px bg-gray-200 " />
 
-// TODO: Error handling in this function
-pub fn get_volumes() -> Result<Vec<Volume>, VolumeError> {
-	System::new_all()
-		.disks()
-		.iter()
-		.filter_map(|disk| {
-			let mut total_capacity = disk.total_space();
-			let mut mount_point = disk.mount_point().to_str().unwrap_or("/").to_string();
-			let available_capacity = disk.available_space();
-			let mut name = disk.name().to_str().unwrap_or("Volume").to_string();
-			let is_removable = disk.is_removable();
+            {UserMenuItem.map(({ label, icon }, i) => (
+              <DropdownMenuPrimitive.Item
+                className={cx(
+                  "flex cursor-default select-none items-center rounded-md px-2 py-2 text-sm outline-none",
+                  "text-gray-500 focus:text-gray-500 focus:bg-gray-200"
+                )}
+              >
+                {icon}
+                <span className="flex-grow text-gray-700">{label}</span>
+              </DropdownMenuPrimitive.Item>
+            ))}
+          </DropdownMenuPrimitive.Content>
+        </DropdownMenuPrimitive.Portal>
+      </DropdownMenuPrimitive.Root>
+    </div>
+  );
+};
 
-			let file_system = String::from_utf8(disk.file_system().to_vec())
-				.unwrap_or_else(|_| "Err".to_string());
-
-			let disk_type = match disk.type_() {
-				sysinfo::DiskType::SSD => "SSD".to_string(),
-				sysinfo::DiskType::HDD => "HDD".to_string(),
-				_ => "Removable Disk".to_string(),
-			};
-
-			if cfg!(target_os = "macos") && mount_point == "/"
-				|| mount_point == "/System/Volumes/Data"
-			{
-				name = "Macintosh HD".to_string();
-				mount_point = "/".to_string();
-			}
-
-			if total_capacity < available_capacity && cfg!(target_os = "windows") {
-				let mut caption = mount_point.clone();
-				caption.pop();
-				let wmic_process = Command::new("cmd")
-					.args([
-						"/C",
-						&format!("wmic logical disk where Caption='{caption}' get Size"),
-					])
-					.output()
-					.expect("failed to execute process");
-				let wmic_process_output = String::from_utf8(wmic_process.stdout).ok()?;
-				let parsed_size =
-					wmic_process_output.split("\r\r\n").collect::<Vec<&str>>()[1].to_string();
-
-				if let Ok(n) = parsed_size.trim().parse::<u64>() {
-					total_capacity = n;
-				}
-			}
-
-			(!mount_point.starts_with("/System")).then_some(Ok(Volume {
-				name,
-				is_root_filesystem: mount_point == "/",
-				mount_point,
-				total_capacity,
-				available_capacity,
-				is_removable,
-				disk_type: Some(disk_type),
-				file_system: Some(file_system),
-			}))
-		})
-		.collect::<Result<Vec<_>, _>>()
-}
-
-// #[test]
-// fn test_get_volumes() {
-//   let volumes = get_volumes()?;
-//   dbg!(&volumes);
-//   assert!(volumes.len() > 0);
-// }
-
-// Adapted from: https://github.com/kimlimjustin/xplorer/blob/f4f3590d06783d64949766cc2975205a3b689a56/src-tauri/src/drives.rs
-`;
+export default DropdownMenu;`;
+const lines = test.split(/\r\n|\r|\n/);
 const Editor = () => {
   return (
     <>
-      <div className="flex justify-center text-sm w-full md: p-4">
-        <div className="border w-full">
-          <Highlight>{test}</Highlight>
+      <div className="flex justify-center items-center text-[0.8rem] w-full">
+        <div className="flex border w-full text-[#60646A] mx-[2rem] md:mx-[12rem] lg:mx-[24rem] border-[#60646A] my-4">
+          <div className="flex flex-col items-center px-2 bg-gray-900">
+            {lines.map((_, idx) => (
+              <div key={idx}>{idx + 1}</div>
+            ))}
+          </div>
+          <div className="overflow-auto">
+            <pre>
+              <code className="m-0">{test}</code>
+            </pre>
+          </div>
         </div>
       </div>
     </>
