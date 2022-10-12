@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import hljs from "highlight.js";
 const test = `import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
 import AvatarImage from "../../public/eric.svg";
@@ -92,6 +94,9 @@ const DropdownMenu = () => {
 export default DropdownMenu;`;
 const lines = test.split(/\r\n|\r|\n/);
 const Editor = () => {
+  useEffect(() => {
+    hljs.highlightAll();
+  });
   return (
     <>
       <div className="flex justify-center items-center text-[0.8rem] w-full">
@@ -103,7 +108,7 @@ const Editor = () => {
           </div>
           <div className="overflow-auto">
             <pre>
-              <code className="m-0">{test}</code>
+              <code>{test}</code>
             </pre>
           </div>
         </div>
