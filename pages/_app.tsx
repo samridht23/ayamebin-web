@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
+import Layout from "../components/Layout";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,7 +18,9 @@ function App({ Component, pageProps }: AppProps) {
           content="free, fast, and easy pastebin service"
         />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
