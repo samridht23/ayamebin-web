@@ -1,7 +1,7 @@
 import React from "react";
 import { styled, keyframes } from "@stitches/react";
 import { ArchiveIcon, FilePlusIcon, CopyIcon } from "@radix-ui/react-icons";
-import { violet, gray } from "@radix-ui/colors";
+import { gray } from "@radix-ui/colors";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { ReactNode } from "react";
 
@@ -26,14 +26,14 @@ const slideLeftAndFade = keyframes({
 });
 
 const StyledContent = styled(TooltipPrimitive.Content, {
+  border: "1px solid #60646A",
   borderRadius: 4,
   padding: "10px 15px",
+  marginTop: "5px",
   fontSize: 12,
   lineHeight: 1,
   color: gray.gray5,
-  backgroundColor: "#0D1117",
-  boxShadow:
-    "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
+  backgroundColor: "#161B22",
   userSelect: "none",
   "@media (prefers-reduced-motion: no-preference)": {
     animationDuration: "400ms",
@@ -48,20 +48,13 @@ const StyledContent = styled(TooltipPrimitive.Content, {
   },
 });
 
-const StyledArrow = styled(TooltipPrimitive.Arrow, {
-  fill: "#0D1117",
-});
-
 interface ContentProps {
   children: ReactNode;
 }
 function Content({ children, ...props }: ContentProps) {
   return (
     <TooltipPrimitive.Portal>
-      <StyledContent {...props}>
-        {children}
-        <StyledArrow />
-      </StyledContent>
+      <StyledContent {...props}>{children}</StyledContent>
     </TooltipPrimitive.Portal>
   );
 }
