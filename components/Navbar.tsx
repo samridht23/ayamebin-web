@@ -80,8 +80,8 @@ const IconButton = styled("button", {
 
 const Navbar = () => {
   return (
-    <div className="w-full bg-[#161B22] ">
-      <div className="flex items-center h-16 justify-between px-8 lg:px-24">
+    <div className="bg-[#161B22] sticky top-0 ">
+      <div className="flex items-center w-full h-16 justify-between px-8 lg:px-24">
         <div className="text-white">Nextbin</div>
         <div>
           {NavItem.map((item, idx) => (
