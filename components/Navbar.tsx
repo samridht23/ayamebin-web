@@ -71,7 +71,7 @@ const IconButton = styled("button", {
   height: 35,
   width: 35,
   color: gray.gray5,
-  margin: "0px 10px 0px 10px",
+  margin: "0px 6px 0px 6px",
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
@@ -80,8 +80,8 @@ const IconButton = styled("button", {
 
 const Navbar = () => {
   return (
-    <div className="bg-[#161B22] sticky top-0 ">
-      <div className="flex items-center w-full h-16 justify-between px-8 lg:px-24">
+    <div className="w-full bg-[#161B22] absolute top-0 ">
+      <div className="flex items-center w-full h-16 justify-between px-4 sm:px-8 lg:px-24">
         <div className="text-white">Nextbin</div>
         <div>
           {NavItem.map((item, idx) => (
