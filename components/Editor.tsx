@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { FileTextIcon } from "@radix-ui/react-icons";
+import { styled } from "@stitches/react";
 import hljs from "highlight.js";
 import Link from "next/link";
 // import styles for highlight
@@ -22,7 +23,7 @@ const Editor = () => {
           </div>
           <div className="border-x border-b h-96 rounded-b-lg border-[#525A67]">
             <pre>
-              <code>{content}</code>
+              <code style={{ padding: "0px" }}>{content}</code>
             </pre>
           </div>
         </div>

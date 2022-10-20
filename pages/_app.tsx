@@ -17,6 +17,10 @@ function App({ Component, pageProps }: AppProps) {
           name="description"
           content="free, fast, and easy pastebin service"
         />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github-dark.min.css"
+        />
       </Head>
       <Layout>
         <Component {...pageProps} />
