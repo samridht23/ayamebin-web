@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { FileTextIcon } from "@radix-ui/react-icons";
 import hljs from "highlight.js";
 import Link from "next/link";
+// import styles for highlight
+const content = `import test from "test"`;
 const Editor = () => {
-  const content = `import test from "test"
-    const dotenv = require('dotenv').config()`;
   useEffect(() => {
     hljs.highlightAll();
   });
