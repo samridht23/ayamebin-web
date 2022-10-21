@@ -3,12 +3,10 @@ import Editor from "../components/Editor";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <main className="w-full h-screen bg-[#0D1117]">
-        {" "}
-        <Editor />
-      </main>
-    </div>
+    <main className="w-full bg-[#0D1117]">
+      {" "}
+      <Editor />
+    </main>
   );
 };
 
