@@ -78,6 +78,23 @@ const IconButton = styled("button", {
   "&:hover": { backgroundColor: gray.gray11 },
 });
 
+const fnHome = async () => {
+  try {
+    const res = await fetch("/api/document", { method: "GET" });
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+function fnNewFile() {
+  fetch("/api/document", { method: "GET" }).then((res) => console.log(res));
+}
+function fnDuplicate() {
+  fetch("/api/document", { method: "POST" }).then((res) => console.log(res));
+}
+
 const Navbar = () => {
   return (
     <div className="w-full bg-[#161B22] sticky top-0 ">
@@ -88,7 +105,7 @@ const Navbar = () => {
             <Provider delayDuration={0}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <IconButton key={idx}>
+                  <IconButton key={idx} onClick={item.fnName}>
                     <item.icon />
                   </IconButton>
                 </TooltipTrigger>
@@ -108,16 +125,19 @@ const NavItem = [
   {
     icon: ArchiveIcon,
     href: "home",
+    fnName: fnHome,
     tooltip: "Save",
   },
   {
     icon: FilePlusIcon,
     href: "home",
+    fnName: fnNewFile,
     tooltip: "New File",
   },
   {
     icon: CopyIcon,
     href: "home",
+    fnName: fnDuplicate,
     tooltip: "Duplicate",
   },
 ];

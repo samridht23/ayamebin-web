@@ -2,65 +2,12 @@ import { useEffect, useState } from "react";
 import { FileTextIcon } from "@radix-ui/react-icons";
 import hljs from "highlight.js";
 import Link from "next/link";
-const content = `import test from "test"
-iiiiiiiiiiiiiiiimport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from iiiitest from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
-mport test from "test"
+const testdata = `import test from "test"
 mport test from "test"`;
 
 const Editor = () => {
   const [editorState, setEditorState] = useState(false);
+  const [content, setContent] = useState("");
   useEffect(() => {
     hljs.highlightAll();
   });
@@ -80,13 +27,15 @@ const Editor = () => {
             {editorState ? (
               <div className="block text-xs p-2">
                 <pre>
-                  <code style={{ padding: "0px" }}>{content}</code>
+                  <code style={{ padding: "0px" }}>{testdata}</code>
                 </pre>
               </div>
             ) : (
               <textarea
                 className="w-full h-[24rem] sm:h-[34rem] rounded-b-lg resize-none  text-xs text-gray-300 whitespace-pre outline-none p-2 bg-[#0D1117]"
                 placeholder="Enter your text here"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               ></textarea>
             )}
           </div>
