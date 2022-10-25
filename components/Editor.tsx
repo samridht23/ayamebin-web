@@ -1,47 +1,33 @@
-import { useEffect, useState } from "react";
-import { FileTextIcon } from "@radix-ui/react-icons";
-import hljs from "highlight.js";
-import Link from "next/link";
-const testdata = `import test from "test"
-mport test from "test"`;
-
+import { useState } from "react";
 const Editor = () => {
-  const [editorState, setEditorState] = useState(false);
   const [content, setContent] = useState("");
-  useEffect(() => {
-    hljs.highlightAll();
-  });
   return (
-    <>
-      <div className="w-full flex justify-center py-[2rem] px-2 xl:px-[24rem] ">
-        <div className=" w-full">
-          <div className="w-full bg-[#161B22] border border-[#525A67] flex justify-between text-white border rounded-t-lg  items-center px-4 py-2">
-            <div className="text-[#959CA4]">
-              <FileTextIcon />
-            </div>
-            <div className="border hover:bg-gray-500 border-[#959CA4] rounded text-white text-xs px-1 leading-5 cursor-pointer">
-              <Link href="/">Raw</Link>
-            </div>
+    <div className="px-4 md:px-12 xl:px-64 py-12">
+      <form>
+        <div class="mb-4 w-full bg-gray-50 rounded-lg border border-[#d6d6d6] ">
+          <div class="py-2 px-4 bg-gray-50 rounded-t-lg ">
+            <textarea
+              id="text"
+              value={content}
+              rows="15"
+              onChange={(e) => setContent(e.target.value)}
+              class="px-0 outline-none w-full resize-none whitespace-pre text-sm text-gray-900 bg-gray-50 border-0 focus:ring-0  "
+              placeholder="Enter text here"
+              spellcheck="false"
+              required
+            ></textarea>
           </div>
-          <div className="block border-x border-b border-[#525A67]">
-            {editorState ? (
-              <div className="block text-xs p-2">
-                <pre>
-                  <code style={{ padding: "0px" }}>{testdata}</code>
-                </pre>
-              </div>
-            ) : (
-              <textarea
-                className="w-full h-[24rem] sm:h-[34rem] rounded-b-lg resize-none  text-xs text-gray-300 whitespace-pre outline-none p-2 bg-[#0D1117]"
-                placeholder="Enter your text here"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              ></textarea>
-            )}
+          <div class="flex justify-between items-center py-2 px-3 border-t ">
+            <button
+              type="submit"
+              class="inline-flex  items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#24292F] hover:bg-[#24292F]/90  rounded-lg focus:ring-4 "
+            >
+              Create Paste
+            </button>
           </div>
         </div>
-      </div>
-    </>
+      </form>
+    </div>
   );
 };
 export default Editor;
