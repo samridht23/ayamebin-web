@@ -23,7 +23,7 @@ const Navbar = () => {
 };
 export default Navbar;
 
-const Socials: { icon: ReactNode; href: string }[] = [
+const Socials = [
   {
     icon: AiOutlineTwitter,
     href: "#",
