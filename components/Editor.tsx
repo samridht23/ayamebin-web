@@ -1,6 +1,17 @@
 import { useState } from "react";
 const Editor = () => {
   const [content, setContent] = useState("");
+  const submitContent = async () => {
+    const res = await fetch("/api/paste", {
+      method: "POST",
+      body: JSON.stringify({ content }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  };
   return (
     <div className="px-4 md:px-12 xl:px-64 py-12">
       <form>
@@ -21,6 +32,7 @@ const Editor = () => {
             <button
               type="submit"
               className="inline-flex  items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#24292F] hover:bg-[#24292F]/90  rounded-lg focus:ring-4 "
+              onClick={submitContent}
             >
               Create Paste
             </button>
