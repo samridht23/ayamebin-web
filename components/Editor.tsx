@@ -1,16 +1,16 @@
 import { useState } from "react";
 const Editor = () => {
   const [content, setContent] = useState("");
-  const submitContent = async () => {
-    const res = await fetch("/api/paste", {
+  const submitContent = async (e: any) => {
+    e.preventDefault();
+    const res = fetch("/api/paste", {
       method: "POST",
-      body: JSON.stringify({ content }),
+      body: content,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "text/plain",
       },
     });
-    const data = await res.json();
-    console.log(data);
+    console.log(res);
   };
   return (
     <div className="px-4 md:px-12 xl:px-64 py-12">
