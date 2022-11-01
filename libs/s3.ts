@@ -3,10 +3,11 @@ import {
   PutObjectCommand,
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
-import cuid from "cuid";
+import { v4 as uuidv4 } from "uuid";
 
 const REGION = process.env.REGION;
 
+// creating new instance of s3
 const s3Client = new S3Client({
   region: REGION,
   credentials: {
@@ -14,10 +15,13 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.SECRET_KEY,
   },
 });
+// function to upload
+// take content as string but make it number since it will receive
+// encrypted hex code
 export const upload = async (content: string) => {
   const params = {
     Bucket: process.env.BUCKET,
-    Key: `pastes/${cuid.slug()}`,
+    Key: `pastes/${uuidv4()}`,
     Body: content,
   };
   try {
@@ -28,5 +32,6 @@ export const upload = async (content: string) => {
     console.log(err);
   }
 };
+export const getContent = async();
 
 module.exports = { upload };
