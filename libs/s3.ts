@@ -32,6 +32,5 @@ export const upload = async (content: string) => {
     console.log(err);
   }
 };
-export const getContent = async();
 
 module.exports = { upload };

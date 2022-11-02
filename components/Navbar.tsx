@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { AiOutlineTwitter, AiOutlineGithub } from "react-icons/ai";
 import Link from "next/link";
 const Navbar = () => {
