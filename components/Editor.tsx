@@ -3,14 +3,24 @@ const Editor = () => {
   const [content, setContent] = useState("");
   const submitContent = async (e: any) => {
     e.preventDefault();
-    const res = fetch("/api/paste", {
-      method: "POST",
-      body: content,
-      headers: {
-        "Content-Type": "text/plain",
+    const key = await window.crypto.subtle.generateKey(
+      {
+        name: "AES-GCM",
+        length: 256,
       },
+      true,
+      ["encrypt", "decrypt"]
+    );
+    const encrypted: ArrayBuffer = await window.crypto.subtle.encrypt(
+      { name: "AES-GCM", iv: new Uint8Array(12) },
+      key,
+      new TextEncoder().encode(JSON.stringify(content))
+    );
+    const res = await fetch("/api/paste", {
+      method: "POST",
+      body: encrypted,
     });
-    console.log(res);
+    return res;
   };
   return (
     <div className="px-4 md:px-12 xl:px-64 py-12">

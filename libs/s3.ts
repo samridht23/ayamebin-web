@@ -15,19 +15,22 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.SECRET_KEY,
   },
 });
-// function to upload
-// take content as string but make it number since it will receive
-// encrypted hex code
-export const upload = async (content: string) => {
+export const upload = async (payload: string) => {
   const params = {
     Bucket: process.env.BUCKET,
     Key: `pastes/${uuidv4()}`,
-    Body: content,
+    Body: payload,
   };
   try {
     const data = await s3Client.send(new PutObjectCommand(params));
     console.log("uploaded");
     return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getContent = async (key: string) => {
+  try {
   } catch (err) {
     console.log(err);
   }
