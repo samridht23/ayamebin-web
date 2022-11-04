@@ -42,4 +42,4 @@ export const getObject = async (key: string) => {
     console.log(err);
   }
 };
-module.exports = { upload };
+module.exports = { upload, getObject };
