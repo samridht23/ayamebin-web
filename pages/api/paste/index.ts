@@ -8,9 +8,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const payload = req.body;
     try {
-      const content = upload(payload);
+      const content = await upload(payload);
       console.log(content);
-      return res.status(200).json({ message: "code has been uploaded" });
+      return res.status(200).json({ success: true });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: "serer error" });

@@ -29,17 +29,4 @@ export const upload = async (payload: string) => {
   }
 };
 
-export const getObject = async (key: string) => {
-  try {
-    const data = await s3Client.send(
-      new GetObjectCommand({
-        Bucket: process.env.Bucket,
-        Key: key,
-      })
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-module.exports = { upload, getObject };
+module.exports = { upload };
