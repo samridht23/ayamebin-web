@@ -15,11 +15,13 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.SECRET_KEY,
   },
 });
+const tt = process.env.BUCKET;
 export const upload = async (payload: string) => {
   try {
     const data = await s3Client.send(
       new PutObjectCommand({
-        Bucket: process.env.BUCKET,
+        Bucket: tt,
+        //Bucket: process.env.BUCKET,
         Key: `pastes/${uuidv4()}`,
         Body: payload,
       })
