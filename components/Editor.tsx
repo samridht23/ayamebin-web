@@ -1,7 +1,9 @@
 import { useState } from "react";
 const Editor = () => {
   const [content, setContent] = useState("");
+  // add form event handler type for the event props passed
   const submitContent = async (e: any) => {
+    // prevent page refresh
     e.preventDefault();
     const key = await window.crypto.subtle.generateKey(
       {
@@ -31,7 +33,9 @@ const Editor = () => {
               id="text"
               value={content}
               rows={15}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+                setContent(e.target.value)
+              }
               className="px-0 outline-none w-full resize-none whitespace-pre text-sm text-gray-900 bg-gray-50 border-0 focus:ring-0  "
               placeholder="Enter text here"
               spellCheck={false}

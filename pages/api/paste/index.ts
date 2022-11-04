@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { upload } from "../../../libs/s3";
+import { upload } from "@/libs/s3";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
