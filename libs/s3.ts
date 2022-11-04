@@ -5,11 +5,11 @@ import {
 } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 
-const REGION = process.env.REGION;
+const region = process.env.REGION;
 
 // creating new instance of s3
 const s3Client = new S3Client({
-  region: REGION,
+  region,
   credentials: {
     accessKeyId: process.env.ACCESS_KEY,
     secretAccessKey: process.env.SECRET_KEY,
