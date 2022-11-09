@@ -18,6 +18,7 @@ const Editor = () => {
       key,
       new TextEncoder().encode(JSON.stringify(content))
     );
+    console.log(key);
     const res = await fetch("/api/paste", {
       method: "POST",
       body: encrypted,
@@ -25,7 +26,7 @@ const Editor = () => {
     return res;
   };
   return (
-    <div className="px-4 md:px-12 xl:px-64 py-12">
+    <div className="px-4 py-12 md:px-12 xl:px-[350px]">
       <form>
         <div className="mb-4 w-full bg-gray-50 rounded-lg border border-[#d6d6d6] ">
           <div className="py-2 px-4 bg-gray-50 rounded-t-lg ">

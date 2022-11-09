@@ -18,7 +18,7 @@ export const upload = async (payload: string) => {
     const data = await s3Client.send(
       new PutObjectCommand({
         Bucket: process.env.BUCKET,
-        Key: `pastes/${uuidv4()}`,
+        Key: `${uuidv4()}`,
         Body: payload,
       })
     );
@@ -28,5 +28,18 @@ export const upload = async (payload: string) => {
     console.log(err);
   }
 };
+export const getStream = async () => {
+  const params = {
+    Bucket: process.env.BUCKET,
+    Key: "5139fb9b-833f-41ca-bf42-3f02e1e662ac",
+  };
+  try {
+    const data = await s3Client.send(new GetObjectCommand(params));
+    console.log("data fetched from s3 bucket");
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-module.exports = { upload };
+module.exports = { upload, getStream };
