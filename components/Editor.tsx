@@ -1,6 +1,7 @@
 import { useState } from "react";
 const Editor = () => {
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
   // add form event handler type for the event props passed
   const submitContent = async (e: any) => {
     // prevent page refresh
@@ -23,6 +24,7 @@ const Editor = () => {
       method: "POST",
       body: encrypted,
     });
+    console.log(res);
     return res;
   };
   return (
@@ -46,6 +48,7 @@ const Editor = () => {
           <div className="flex justify-between items-center py-2 px-3 border-t ">
             <button
               type="submit"
+              disabled={loading}
               className="inline-flex  items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#24292F] hover:bg-[#24292F]/90  rounded-lg focus:ring-4 "
               onClick={submitContent}
             >
