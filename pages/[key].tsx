@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 const handler = () => {
   const router: NextRouter = useRouter();
   const key: string = router.asPath;
+  const tt = key;
   const [content, setContent] = useState("");
   useEffect(() => {
     hljs.highlightAll();
-    fetch(`/api/paste${key}`)
+    fetch("/api/paste" + tt, { method: "GET" })
       .then((res) => res.text())
       .then((data) => {
         setContent(data);

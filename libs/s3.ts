@@ -28,10 +28,10 @@ export const upload = async (payload: string) => {
     console.log(err);
   }
 };
-export const getStream = async () => {
+export const getStream = async (key: string) => {
   const params = {
     Bucket: process.env.BUCKET,
-    Key: "5139fb9b-833f-41ca-bf42-3f02e1e662ac",
+    Key: key,
   };
   try {
     const data = await s3Client.send(new GetObjectCommand(params));

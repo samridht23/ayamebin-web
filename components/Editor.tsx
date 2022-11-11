@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import cuid from "cuid";
 const Editor = () => {
+  const router = useRouter();
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  // add form event handler type for the event props passed
+  // add form event handler type for the event props passed replace e type any
   const submitContent = async (e: any) => {
-    // prevent page refresh
     e.preventDefault();
     const key = await window.crypto.subtle.generateKey(
       {
@@ -14,17 +16,21 @@ const Editor = () => {
       true,
       ["encrypt", "decrypt"]
     );
+    const objectkey = (await window.crypto.subtle.exportKey("jwk", key)).k;
+    const routeslug = cuid.slug();
     const encrypted: ArrayBuffer = await window.crypto.subtle.encrypt(
       { name: "AES-GCM", iv: new Uint8Array(12) },
       key,
       new TextEncoder().encode(JSON.stringify(content))
     );
-    console.log(key);
     const res = await fetch("/api/paste", {
       method: "POST",
       body: encrypted,
     });
-    console.log(res);
+    if (res) {
+      setLoading(true);
+      router.push(`/${routeslug}#key=${objectkey}`);
+    }
     return res;
   };
   return (
