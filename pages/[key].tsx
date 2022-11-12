@@ -1,20 +1,21 @@
-import { NextRouter, useRouter } from "next/router";
-import hljs from "highlight.js";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import hljs from "highlight.js";
 
-const handler = () => {
-  const router: NextRouter = useRouter();
-  const key: string = router.asPath;
-  const tt = key;
+const pages = () => {
   const [content, setContent] = useState("");
-  useEffect(() => {
-    hljs.highlightAll();
-    fetch("/api/paste" + tt, { method: "GET" })
-      .then((res) => res.text())
-      .then((data) => {
-        setContent(data);
-      });
-  }, []);
+  const router = useRouter();
+  const { key } = router.query;
+  async function fetcher() {
+    try {
+      const response = await fetch(`/api/paste/?k=${key}`, { method: "GET" });
+      const data = await response.text();
+      setContent(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  fetcher();
   return (
     <>
       <div className="px-4 py-12 md:px-12 xl:px-[350px]">
@@ -28,4 +29,4 @@ const handler = () => {
     </>
   );
 };
-export default handler;
+export default pages;

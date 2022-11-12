@@ -29,6 +29,7 @@ const Editor = () => {
     });
     if (res) {
       setLoading(true);
+      // make remove #key from route as dynamic route will handle it and the #key= is only required in api fetch call and all this data will dynamic and key will be pickuped from router.query
       router.push(`/${routeslug}#key=${objectkey}`);
     }
     return res;

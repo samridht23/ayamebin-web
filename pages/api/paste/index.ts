@@ -1,9 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { upload } from "@/libs/s3";
+import { upload, getStream } from "@/libs/s3";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    return res.status(405).json({ message: "Method on allowed" });
+    const key = req.query.k;
+    try {
+      const content = await getStream(key);
+      const data = await content?.Body?.transformToString();
+      return res.status(200).send(data);
+    } catch (err) {
+      console.log(err);
+    }
   }
   if (req.method === "POST") {
     const payload = req.body;

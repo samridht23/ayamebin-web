@@ -28,14 +28,13 @@ export const upload = async (payload: string) => {
     console.log(err);
   }
 };
-export const getStream = async (key: string) => {
-  const params = {
-    Bucket: process.env.BUCKET,
-    Key: key,
-  };
+export const getStream = async (tt: any) => {
   try {
+    const params = {
+      Bucket: process.env.BUCKET,
+      Key: tt,
+    };
     const data = await s3Client.send(new GetObjectCommand(params));
-    console.log("data fetched from s3 bucket");
     return data;
   } catch (err) {
     console.log(err);
