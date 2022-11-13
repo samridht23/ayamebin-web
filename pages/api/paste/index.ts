@@ -14,8 +14,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     const payload = req.body;
+    const { slug } = req.query;
+    const key = slug?.toString() ?? "";
     try {
-      const content = await upload(payload);
+      const content = await upload(payload, key);
       console.log(content);
       return res.status(200).json({ success: true });
     } catch (err) {

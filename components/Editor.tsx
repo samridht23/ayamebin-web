@@ -17,20 +17,20 @@ const Editor = () => {
       ["encrypt", "decrypt"]
     );
     const objectkey = (await window.crypto.subtle.exportKey("jwk", key)).k;
-    const routeslug = cuid.slug();
+    const slug: string = cuid.slug();
     const encrypted: ArrayBuffer = await window.crypto.subtle.encrypt(
       { name: "AES-GCM", iv: new Uint8Array(12) },
       key,
       new TextEncoder().encode(JSON.stringify(content))
     );
-    const res = await fetch("/api/paste", {
+    const res = await fetch(`/api/paste/?slug=` + slug, {
       method: "POST",
       body: encrypted,
     });
     if (res) {
       setLoading(true);
       // make remove #key from route as dynamic route will handle it and the #key= is only required in api fetch call and all this data will dynamic and key will be pickuped from router.query
-      router.push(`/${routeslug}#key=${objectkey}`);
+      router.push(`/${slug}#key=${objectkey}`);
     }
     return res;
   };

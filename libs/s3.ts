@@ -3,7 +3,6 @@ import {
   PutObjectCommand,
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
-import { v4 as uuidv4 } from "uuid";
 
 // creating new instance of s3
 const s3Client = new S3Client({
@@ -13,12 +12,12 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.SECRET_KEY,
   },
 });
-export const upload = async (payload: string) => {
+export const upload = async (payload: string, key: string) => {
   try {
     const data = await s3Client.send(
       new PutObjectCommand({
         Bucket: process.env.BUCKET,
-        Key: `${uuidv4()}`,
+        Key: key,
         Body: payload,
       })
     );
