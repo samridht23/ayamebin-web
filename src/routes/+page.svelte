@@ -5,9 +5,6 @@
 
 <div class="my-12 flex flex-col">
 	<div class="w-full">
-		<Menu />
-	</div>
-	<div class="w-full">
 		<Editor />
 	</div>
 </div>

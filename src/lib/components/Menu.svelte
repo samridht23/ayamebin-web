@@ -4,6 +4,7 @@
 	import { createId } from '@paralleldrive/cuid2';
 	import DownIcon from '$lib/icons/DownIcon.svelte';
 	import { encryptData } from '$lib/utils/encrypt';
+	import { goto } from '$app/navigation';
 	let textareavalue: string = '';
 	const unsubscribe = DataStore.subscribe((value) => {
 		textareavalue = value.textareavalue;
@@ -45,24 +46,32 @@
 	const uploadData = async () => {
 		try {
 			let uniqueId = createId();
-            // make arrayBuffer to base64 string code modular 
+			// make arrayBuffer to base64 string code modular
 			// decrypt key is the key required to decrypt the data from s3
 			let { encryptedData, decryptKey } = await encryptData(textareavalue);
 			let binaryString = String.fromCharCode(...new Uint8Array(encryptedData));
 			let base64String = btoa(binaryString);
+			const stringifiedDecryptKey = (await window.crypto.subtle.exportKey('jwk', decryptKey)).k;
+			// remove this code after the project has been compleleted
 			console.log(base64String);
-			await fetch('http://localhost:8080/upload', {
+			await fetch('http://localhost:8080', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Origin: 'http://localhost:5173'
 				},
 				body: JSON.stringify({ expiry, base64String, uniqueId })
-			}).catch((err) => {
-				console.error('Error Uploading Data');
-				console.error(err);
-				throw err;
-			});
+			})
+				.then((response) => {
+					if (response.ok) {
+						goto('/' + uniqueId + '#key=' + stringifiedDecryptKey);
+					}
+				})
+				.catch((err) => {
+					console.error('Error Uploading Data');
+					console.error(err);
+					throw err;
+				});
 		} catch (err) {
 			throw err;
 		}
