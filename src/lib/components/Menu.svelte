@@ -3,7 +3,13 @@
 	import { DataStore } from '../../store/DataStore';
 	import { createId } from '@paralleldrive/cuid2';
 	import DownIcon from '$lib/icons/DownIcon.svelte';
-	import { encryptData } from '$lib/utils/encrypt';
+	import {
+		encryptData,
+		genKey,
+		arrayBufferToBase64,
+		expKey,
+		dataEncoder
+	} from '$lib/utils/encrypt';
 	import { goto } from '$app/navigation';
 	let textareavalue: string = '';
 	const unsubscribe = DataStore.subscribe((value) => {
@@ -45,26 +51,24 @@
 	];
 	const uploadData = async () => {
 		try {
-			let uniqueId = createId();
-			// make arrayBuffer to base64 string code modular
-			// decrypt key is the key required to decrypt the data from s3
-			let { encryptedData, decryptKey } = await encryptData(textareavalue);
-			let binaryString = String.fromCharCode(...new Uint8Array(encryptedData));
-			let base64String = btoa(binaryString);
-			const stringifiedDecryptKey = (await window.crypto.subtle.exportKey('jwk', decryptKey)).k;
-			// remove this code after the project has been compleleted
-			console.log(base64String);
+			const uniqueId = createId();
+			const key = await genKey();
+			const exportedKey = await expKey(key);
+			const encodedBuffer = await dataEncoder(textareavalue);
+			const encryptedBuffer = await encryptData(encodedBuffer, key);
+			const encryptedString = await arrayBufferToBase64(encryptedBuffer);
+			console.log('Encrypted String going to server', encryptedString);
 			await fetch('http://localhost:8080', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Origin: 'http://localhost:5173'
 				},
-				body: JSON.stringify({ expiry, base64String, uniqueId })
+				body: JSON.stringify({ expiry, encryptedString, uniqueId })
 			})
 				.then((response) => {
 					if (response.ok) {
-						goto('/' + uniqueId + '#key=' + stringifiedDecryptKey);
+						goto('/' + uniqueId + '#key=' + exportedKey);
 					}
 				})
 				.catch((err) => {

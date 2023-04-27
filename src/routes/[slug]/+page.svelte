@@ -3,46 +3,17 @@
 	import CopyIcon from '$lib/icons/CopyIcon.svelte';
 	import DownloadIcon from '$lib/icons/DownloadIcon.svelte';
 	import SecurityIcon from '$lib/icons/SecurityIcon.svelte';
-	import { decryptData } from '$lib/utils/encrypt';
+	import { impKey, decryptData, base64ToArrayBuffer, dataDecoder } from '$lib/utils/encrypt';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	let content = ``;
-	let file_key = $page.url.pathname.split('/')[1];
-	let key = $page.url.hash.split('#key=')[1];
-	console.log(key);
-	console.log(file_key);
-	function base64ToArrayBuffer(base64: string): ArrayBuffer {
-		var binaryString = atob(base64);
-		var bytes = new Uint8Array(binaryString.length);
-		for (var i = 0; i < binaryString.length; i++) {
-			bytes[i] = binaryString.charCodeAt(i);
-		}
-		return bytes.buffer;
-	}
-	const keyAndBufferDecryption = async (encryptedData: ArrayBuffer): Promise<string> => {
-		try {
-			const decryptionKey = await window.crypto.subtle.importKey(
-				'jwk',
-				{
-					k: key,
-					alg: 'A128GCM',
-					ext: true,
-					key_ops: ['encrypt', 'decrypt'],
-					kty: 'oct'
-				},
-				{ name: 'AES-GCM', length: 128 },
-				false, // extractable
-				['decrypt']
-			);
-			const content = await decryptData(encryptedData, decryptionKey);
-			return content;
-		} catch (err) {
-			console.error('Error during Key and Buffer description');
-			throw err;
-		}
-	};
+	let file_key: string = $page.url.pathname.split('/')[1];
+	let exportedKey: string = $page.url.hash.split('#key=')[1];
+	let encryptedString: string;
+	let value: string;
+	let isLoading = true;
 	const fetchData = async () => {
 		try {
+			const newKey = await impKey(exportedKey);
 			await fetch('http://localhost:8080?file_key=' + file_key, {
 				method: 'GET',
 				headers: {
@@ -52,16 +23,18 @@
 			})
 				.then((response) => response.json())
 				.then((data) => {
-					const encryptedData = data.encryptedData;
-					const encryptedBuffer = base64ToArrayBuffer(encryptedData);
-					const result = keyAndBufferDecryption(encryptedBuffer);
-					console.log(result);
+					encryptedString = data.encryptedString;
 				})
 				.catch((err) => {
 					console.error('Error fetching data');
 					console.error(err);
 					throw err;
 				});
+			console.log('Encrypted String fetchin from server and from s3 bucket', encryptedString);
+			const newEncryptedBuffer = await base64ToArrayBuffer(encryptedString);
+			const decryptedBuffer = await decryptData(newEncryptedBuffer, newKey);
+			value = await dataDecoder(decryptedBuffer);
+			isLoading = false;
 		} catch (err) {
 			console.error('Error fetching data', err);
 		}
@@ -90,6 +63,10 @@
 		</div>
 	</div>
 	<div class="p-4 rounded text-sm bg-[#1D1F21] text-white">
-		{content}
+		{#if isLoading}
+			<p>Loading...</p>
+		{:else}
+			{value}
+		{/if}
 	</div>
 </div>
