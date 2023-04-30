@@ -14,11 +14,11 @@
 	const fetchData = async () => {
 		try {
 			const newKey = await impKey(exportedKey);
-			await fetch('http://localhost:8080?file_key=' + file_key, {
+			await fetch('https://safepasteserver-production.up.railway.app?file_key=' + file_key, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Origin: 'http://localhost:5173'
+					Origin: 'https://safepasteserver-production.up.railway.app'
 				}
 			})
 				.then((response) => response.json())
@@ -46,18 +46,26 @@
 
 <div class="border border-zinc-600 rounded">
 	<div class="flex border-b border-zinc-600 p-2 items-center justify-between rounded-t">
-		<div>
-			<FileIcon size={20} color="#808080" />
+		<div class="stroke-[#808080]">
+			<FileIcon size={20} />
 		</div>
 		<div class="flex items-center space-x-4">
 			<div class="flex divide-x divide-zinc-600 border border-zinc-600 rounded bg-[#333238]">
-				<button class="p-1 bg-transparent"><CopyIcon size={20} color="#808080" /></button>
-				<button class="p-1 bg-transparent"><FileIcon size={20} color="#808080" /></button>
-				<button class="p-1 bg-transparent"><DownloadIcon size={20} color="#808080" /></button>
+				<button class="p-1 bg-transparent hover:bg-zinc-600 stroke-[#808080] hover:stroke-white"
+					><CopyIcon size={20} /></button
+				>
+				<button class="p-1 bg-transparent hover:bg-zinc-600 stroke-[#808080] hover:stroke-white"
+					><FileIcon size={20} /></button
+				>
+				<button class="p-1 bg-transparent hover:bg-zinc-600 stroke-[#808080] hover:stroke-white"
+					><DownloadIcon size={20} /></button
+				>
 			</div>
 			<a href="#">
-				<div class="border border-zinc-600 rounded p-1 bg-[#333238]">
-					<SecurityIcon size={20} color="#808080" />
+				<div
+					class="border border-zinc-600 rounded p-1 bg-[#333238] hover:bg-zinc-600 stroke-[#808080] hover:stroke-white"
+				>
+					<SecurityIcon size={20} />
 				</div>
 			</a>
 		</div>

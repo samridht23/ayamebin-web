@@ -58,11 +58,11 @@
 			const encryptedBuffer = await encryptData(encodedBuffer, key);
 			const encryptedString = await arrayBufferToBase64(encryptedBuffer);
 			console.log('Encrypted String going to server', encryptedString);
-			await fetch('http://localhost:8080', {
+			await fetch('https://safepasteserver-production.up.railway.app', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Origin: 'http://localhost:5173'
+					Origin: 'https://safepasteserver-production.up.railway.app'
 				},
 				body: JSON.stringify({ expiry, encryptedString, uniqueId })
 			})
@@ -84,8 +84,9 @@
 
 <div class="flex flex-row py-2 items-center justify-between">
 	<div class="flex flex-row space-x-4 justify-center border rounded border-gray-800">
-		<button class="rounded py-2 px-1 md:p-2 text-white text-sm bg-blue-800 text-gray-300" disabled
-			>Clone Paste</button
+		<button
+			class="rounded py-2 px-1 md:p-2 text-white text-sm bg-blue-600 disabled:bg-blue-800 text-gray-300"
+			disabled>Clone Paste</button
 		>
 	</div>
 	<div class="flex space-x-1 md:space-x-4">

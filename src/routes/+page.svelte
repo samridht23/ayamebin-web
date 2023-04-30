@@ -3,7 +3,7 @@
 	import Editor from '$lib/components/Editor.svelte';
 </script>
 
-<div class="my-12 flex flex-col">
+<div class="flex flex-col">
 	<div class="w-full">
 		<Editor />
 	</div>
