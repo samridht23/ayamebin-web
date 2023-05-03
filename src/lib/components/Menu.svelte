@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { DataStore } from '../../store/DataStore';
 	import { createId } from '@paralleldrive/cuid2';
 	import DownIcon from '$lib/icons/DownIcon.svelte';
@@ -49,6 +49,10 @@
 			expiry: 365
 		}
 	];
+	let createPasteState = false;
+	const createPaste = () => {
+		createPasteState = true;
+	};
 	const uploadData = async () => {
 		try {
 			const uniqueId = createId();
@@ -69,6 +73,7 @@
 				.then((response) => {
 					if (response.ok) {
 						goto('/' + uniqueId + '#key=' + exportedKey);
+						createPaste();
 					}
 				})
 				.catch((err) => {
@@ -106,8 +111,10 @@
 			</div>
 		</div>
 		<div class="flex flex-row space-x-4 justify-center border rounded border-gray-800">
-			<button on:click={uploadData} class="rounded p-2 text-white text-sm bg-green-600"
-				>Create Paste</button
+			<button
+				on:click={uploadData}
+				disabled={createPasteState}
+				class="rounded p-2 text-white text-sm bg-green-600 disabled:bg-green-800">Create Paste</button
 			>
 		</div>
 	</div>
