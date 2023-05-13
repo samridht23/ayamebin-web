@@ -8,11 +8,9 @@
 <div class="flex flex-col h-screen justify-between">
 	<div>
 		<Navbar />
-		<div class="px-4 w-full lg:w-3/5 m-auto">
+		<div class="px-4 w-full lg:w-3/5 my-12 m-auto">
 			<slot />
 		</div>
 	</div>
-	<div>
-		<Footer />
-	</div>
+	<Footer />
 </div>

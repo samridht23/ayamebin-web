@@ -81,57 +81,55 @@
 	};
 </script>
 
-<div class="mt-12">
-	<div class="flex flex-row py-2 items-center justify-end">
-		<div class="flex space-x-1 md:space-x-4">
-			<div class="relative text-sm flex space-x-2 items-center">
-				<select
-					bind:value={expiry}
-					class="w-40 lg:w-44 outline-none p-2 border border-zinc-600 rounded bg-[#333238] appearance-none text-white"
-				>
-					{#each options as option}
-						<option value={option.expiry} class="bg-gray-200">{option.label}</option>
-					{/each}
-				</select>
-				<div
-					class="absolute border-black right-1 flex pointer-events-none cursor-pointer bg-[#333238]"
-				>
-					<DownIcon size={20} color="white" />
-				</div>
+<div class="flex flex-row py-2 items-center justify-end">
+	<div class="flex space-x-1 md:space-x-4">
+		<div class="relative text-sm flex space-x-2 items-center">
+			<select
+				bind:value={expiry}
+				class="w-40 lg:w-44 outline-none p-2 border border-zinc-600 rounded bg-[#333238] appearance-none text-white"
+			>
+				{#each options as option}
+					<option value={option.expiry} class="bg-gray-200">{option.label}</option>
+				{/each}
+			</select>
+			<div
+				class="absolute border-black right-1 flex pointer-events-none cursor-pointer bg-[#333238]"
+			>
+				<DownIcon size={20} color="white" />
 			</div>
-			<div class="flex flex-row space-x-4 justify-center border rounded border-gray-800">
-				<button
-					on:click={uploadData}
-					disabled={createPasteState}
-					class="rounded p-2 text-white text-sm bg-green-600 disabled:bg-green-800"
-					>Create Paste</button
-				>
-			</div>
+		</div>
+		<div class="flex flex-row space-x-4 justify-center border rounded border-gray-800">
+			<button
+				on:click={uploadData}
+				disabled={createPasteState}
+				class="rounded p-2 text-white text-sm bg-green-600 disabled:bg-green-800"
+				>Create Paste</button
+			>
 		</div>
 	</div>
-	<div class="border border-zinc-600 rounded">
-		<div class="flex border-b border-zinc-600 p-2 items-center justify-between rounded-t">
-			<div class="stroke-[#808080]">
-				<FileIcon size={20} />
-			</div>
-			<div class="flex items-center space-x-4">
-				<a href="#">
-					<div
-						class="border border-zinc-600 rounded p-1 bg-[#333238] hover:bg-zinc-600 stroke-[#808080] hover:stroke-white"
-					>
-						<SecurityIcon size={20} />
-					</div>
-				</a>
-			</div>
+</div>
+<div class="border border-zinc-600 rounded">
+	<div class="flex border-b border-zinc-600 p-2 items-center justify-between rounded-t">
+		<div class="stroke-[#808080]">
+			<FileIcon size={20} />
 		</div>
-		<div class="p-4 bg-[#1D1F21] rounded">
-			<textarea
-				class="outline-none w-full resize-none whitespace-pre text-white text-sm bg-[#1D1F21] h-[50vh]"
-				placeholder="Enter text here"
-				spellCheck={false}
-				required
-				bind:value={textareavalue}
-			/>
+		<div class="flex items-center space-x-4">
+			<a href="#">
+				<div
+					class="border border-zinc-600 rounded p-1 bg-[#333238] hover:bg-zinc-600 stroke-[#808080] hover:stroke-white"
+				>
+					<SecurityIcon size={20} />
+				</div>
+			</a>
 		</div>
+	</div>
+	<div class="p-4 bg-[#1D1F21] rounded">
+		<textarea
+			class="outline-none w-full resize-none whitespace-pre text-white text-sm bg-[#1D1F21] h-[50vh]"
+			placeholder="Enter text here"
+			spellCheck={false}
+			required
+			bind:value={textareavalue}
+		/>
 	</div>
 </div>

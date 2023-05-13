@@ -34,7 +34,6 @@
 	"type": "module",
 	"dependencies": {
 		"@paralleldrive/cuid2": "^2.2.0",
-		"@radix-ui/react-select": "^1.2.1",
-		"@svelteuidev/composables": "^0.11.1"
+		"@radix-ui/react-select": "^1.2.1"
 	}
 }
