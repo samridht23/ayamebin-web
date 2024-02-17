@@ -32,7 +32,7 @@ import {
 const Languages = [
   {
     label: "Text",
-    value: "undefined",
+    value: "plaintext",
     icon: GlobeIcon,
   },
   {
@@ -178,6 +178,136 @@ const Languages = [
   {
     label: "Apex",
     value: "apex",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Azcli",
+    value: "azcli",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Bat",
+    value: "bat",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Csp",
+    value: "csp",
+    icon: GlobeIcon,
+  },
+  {
+    label: "INI",
+    value: "ini",
+    icon: GlobeIcon,
+  },
+  {
+    label: "JSON",
+    value: "json",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Markdown",
+    value: "markdown",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Msdax",
+    value: "msdax",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Pascal",
+    value: "pascal",
+    icon: GlobeIcon,
+  },
+  {
+    label: "PGSQL",
+    value: "pgsql",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Postiats",
+    value: "postiats",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Powerquery",
+    value: "powerquery",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Powershell",
+    value: "powershell",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Pug",
+    value: "pug",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Razor",
+    value: "razor",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Redshift",
+    value: "redshift",
+    icon: GlobeIcon,
+  },
+  {
+    label: "SB",
+    value: "sb",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Scheme",
+    value: "scheme",
+    icon: GlobeIcon,
+  },
+  {
+    label: "SCSS",
+    value: "scss",
+    icon: GlobeIcon,
+  },
+  {
+    label: "Shell",
+    value: "shell",
+    icon: GlobeIcon,
+  },
+  {
+    label: "SOL",
+    value: "sol",
+    icon: GlobeIcon,
+  },
+  {
+    label: "SQL",
+    value: "sql",
+    icon: GlobeIcon,
+  },
+  {
+    label: "St",
+    value: "st",
+    icon: GlobeIcon,
+  },
+  {
+    label: "TCL",
+    value: "tcl",
+    icon: GlobeIcon,
+  },
+  {
+    label: "VB",
+    value: "vb",
+    icon: GlobeIcon,
+  },
+  {
+    label: "XML",
+    value: "xml",
+    icon: GlobeIcon,
+  },
+  {
+    label: "YAML",
+    value: "yaml",
     icon: GlobeIcon,
   },
 ]

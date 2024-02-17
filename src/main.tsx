@@ -2,16 +2,24 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.tsx'
+import Paste from "./components/paste"
 import './global.css'
+import Home from './components/home'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />
-  },
-  {
-    path: "/test",
-    element: <div>test hello wolrdl</div>
+    element: <App />,
+    children: [
+      {
+        element: <Home />,
+        index: true
+      },
+      {
+        path: "/:pasteId",
+        element: <Paste />
+      },
+    ]
   },
 ])
 

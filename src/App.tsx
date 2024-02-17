@@ -1,6 +1,6 @@
 import Navbar from "./components/navbar"
-import Home from "./components/home"
 import { create } from "zustand"
+import { Outlet } from "react-router-dom"
 
 interface ContextProps {
   language: string
@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Home />
+      <Outlet />
     </>
   )
 }
