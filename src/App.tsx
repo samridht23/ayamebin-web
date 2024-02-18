@@ -4,17 +4,21 @@ import { Outlet } from "react-router-dom"
 
 interface ContextProps {
   language: string
-  editorValue: string
-  updateLang: (newLang: string) => void
-  updateEditorValue: (newValue: string) => void
+  editorData: string
+  duplicateData: string
+  updateDuplicateData: (duplicateData: string) => void
+  updateLanguage: (newLang: string) => void
+  updateEditorData: (newValue: string) => void
 }
 
 export const zustStore = create<ContextProps>()((set) => (
   {
-    language: "text",
-    editorValue: "",
-    updateLang: (newLang) => set(() => ({ language: newLang })),
-    updateEditorValue: (newEditorValue) => set(() => ({ editorValue: newEditorValue })),
+    language: "plaintext",
+    editorData: "",
+    duplicateData: "",
+    updateDuplicateData: (newData) => set(() => ({ duplicateData: newData })),
+    updateLanguage: (newLanguage) => set(() => ({ language: newLanguage })),
+    updateEditorData: (newEditorData) => set(() => ({ editorData: newEditorData })),
   }
 ))
 

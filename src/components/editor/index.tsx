@@ -11,12 +11,12 @@ const opts: editor.IStandaloneEditorConstructionOptions = {
 }
 
 const MonacoEditor = () => {
-  const { updateEditorValue } = zustStore()
 
   function handleEditorChange(value: any) {
-    updateEditorValue(value)
+    updateEditorData(value)
   }
-  const { language } = zustStore()
+
+  const { editorData, language, updateEditorData } = zustStore()
   loader.init().then(async (monaco) => {
     monaco.editor.defineTheme("brilliance", BRILLIANCE_THEME)
   })
@@ -27,6 +27,7 @@ const MonacoEditor = () => {
       theme="brilliance"
       language={language}
       onChange={handleEditorChange}
+      defaultValue={editorData}
     />
   )
 }
