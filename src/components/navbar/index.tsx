@@ -1,5 +1,6 @@
 import * as Select from '@radix-ui/react-select';
 import * as Dialog from '@radix-ui/react-dialog';
+import * as Tooltip from '@radix-ui/react-tooltip';
 import {
   useEffect,
   useMemo,
@@ -130,32 +131,76 @@ const Navbar = () => {
     )}>
       <Link to="/" className="flex items-center gap-2">
         <Logo size="20" />
-        <div className="text-md font-[CircularBold] hidden md:block">Ayame</div>
+        <div className="text-md font-[CircularBold] hidden sm:block">Ayame</div>
       </Link>
       <div>
         <div className="flex gap-2">
           {location.pathname !== '/' &&
             <>
-              <button
-                onClick={handleDuplicate}
-                className={clsx(
-                  "border border-neutral-800",
-                  "hover:border-neutral-700 hover:bg-neutral-800",
-                  "p-2 flex items-center rounded"
-                )}>
-                <CopyIcon
-                  strokeWidth={1.5}
-                  size={"18"}
-                  color="white"
-                />
-              </button>
-              <Link to="/" className={clsx(
-                "border border-neutral-800",
-                "hover:border-neutral-700 hover:bg-neutral-800",
-                "p-2 flex items-center rounded"
-              )}>
-                <FileTextIcon strokeWidth={1.5} size={"18"} color="white" />
-              </Link>
+              <Tooltip.Provider delayDuration={100}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={handleDuplicate}
+                      className={clsx(
+                        "border border-neutral-800",
+                        "hover:border-neutral-700 hover:bg-neutral-800",
+                        "p-2 flex items-center rounded"
+                      )}>
+                      <CopyIcon
+                        strokeWidth={1.5}
+                        size={"18"}
+                        color="white"
+                      />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className={clsx(
+                        "z-50 overflow-hidden rounded border border-neutral-800 bg-black",
+                        "bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
+                        "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out",
+                        "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+                        "data-[side=bottom]:slide-in-from-top-2",
+                        "data-[side=left]:slide-in-from-right-2",
+                        "data-[side=right]:slide-in-from-left-2",
+                        "data-[side=top]:slide-in-from-bottom-2",
+                      )}>
+                      Duplicate Paste
+                      <Tooltip.Arrow />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+              <Tooltip.Provider delayDuration={100}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger>
+                    <Link to="/" className={clsx(
+                      "border border-neutral-800",
+                      "hover:border-neutral-700 hover:bg-neutral-800",
+                      "p-2 flex items-center rounded"
+                    )}>
+                      <FileTextIcon strokeWidth={1.5} size={"18"} color="white" />
+                    </Link>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className={clsx(
+                        "z-50 overflow-hidden rounded border border-neutral-800 bg-black",
+                        "bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
+                        "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out",
+                        "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+                        "data-[side=bottom]:slide-in-from-top-2",
+                        "data-[side=left]:slide-in-from-right-2",
+                        "data-[side=right]:slide-in-from-left-2",
+                        "data-[side=top]:slide-in-from-bottom-2",
+                      )}>
+                      New Paste
+                      <Tooltip.Arrow />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
               <div className={clsx(
                 "border border-neutral-800",
                 "p-2 flex items-center rounded"
@@ -258,19 +303,21 @@ const Navbar = () => {
                 <Select.Trigger
                   className={clsx(
                     "flex items-center justify-between rounded-md",
-                    "border border-input bg-background w-44 px-3",
+                    "border border-input bg-background px-3",
                     "text-xs box-border font-[CircularMedium] border-neutral-800",
-                    "hover:border-neutral-700 outline-none"
+                    "hover:border-neutral-700 outline-none gap-4",
                   )}
                 >
-                  <Select.Value />
+                  <div className="hidden sm:block">
+                    <Select.Value />
+                  </div>
                   <Select.Icon className="flex items-center">
                     <ChevronsUpDownIcon strokeWidth={1.5} size={16} />
                   </Select.Icon>
                 </Select.Trigger>
                 <Select.Content
                   className={clsx(
-                    "w-[var(--radix-select-trigger-width)] relative shadow-xl",
+                    "w-40 sm:w-[var(--radix-select-trigger-width)] relative shadow-xl",
                     "border border-neutral-800 text-xs font-[CircularMedium]",
                     "fixed top-1 left-0 right-0 bottom-0 z-50 rounded-md p-2 bg-black",
                     "data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -314,7 +361,7 @@ const Navbar = () => {
                   <div className="flex items-center justify-center">
                     <svg
                       aria-hidden="true"
-                      className="w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-gray-900"
+                      className="w-4 h-4 text-gray-200 animate-spin fill-gray-900"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
