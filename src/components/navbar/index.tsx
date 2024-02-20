@@ -78,7 +78,7 @@ const Navbar = () => {
     navigate("/")
   }
 
-  const submitPaste = async () => {
+  const submitDocument = async () => {
     const data = {
       lang: language,
       expirey: expireOption,
@@ -93,16 +93,31 @@ const Navbar = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        updateEditorData("")
-        updateLanguage("")
-        toast.success("Paste created")
-        navigate(`/${data.paste_id}`)
-        setSubmitLoading(false)
+
+        if (expireOption === "0") {
+          navigate(`/`)
+          setSubmitLoading(false)
+          toast.success("One Time URL created", {
+            action: {
+              label: "Copy URL",
+              onClick: () => {
+                navigator.clipboard.writeText(`${import.meta.env.VITE_BASE_URL}/${data.paste_id}`)
+              }
+            }
+          })
+        } else {
+          toast.success("Document Uploaded")
+          setSubmitLoading(false)
+          updateEditorData("")
+          updateLanguage("")
+          navigate(`/${data.paste_id}`)
+        }
       } else {
-        throw Error("Failed to upload paste. Server responded with status: " + response.status)
+        throw Error("Error uploading document: " + response.status)
       }
     } catch (error) {
-      toast.error('Error uploading paste. Try again.')
+      toast.error('Error uploading document')
+      console.log(error)
     }
   }
 
@@ -130,7 +145,7 @@ const Navbar = () => {
       "bg-[#0a0a0a] border-neutral-800"
     )}>
       <Link to="/" className="flex items-center gap-2">
-        <Logo size="20" />
+        <Logo size="24" />
         <div className="text-md font-[CircularBold] hidden sm:block">Ayame</div>
       </Link>
       <div>
@@ -166,7 +181,7 @@ const Navbar = () => {
                         "data-[side=right]:slide-in-from-left-2",
                         "data-[side=top]:slide-in-from-bottom-2",
                       )}>
-                      Duplicate Paste
+                      Duplicate Document
                       <Tooltip.Arrow />
                     </Tooltip.Content>
                   </Tooltip.Portal>
@@ -195,7 +210,7 @@ const Navbar = () => {
                         "data-[side=right]:slide-in-from-left-2",
                         "data-[side=top]:slide-in-from-bottom-2",
                       )}>
-                      New Paste
+                      New Document
                       <Tooltip.Arrow />
                     </Tooltip.Content>
                   </Tooltip.Portal>
@@ -305,7 +320,7 @@ const Navbar = () => {
                     "flex items-center justify-between rounded-md",
                     "border border-input bg-background px-3",
                     "text-xs box-border font-[CircularMedium] border-neutral-800",
-                    "hover:border-neutral-700 outline-none gap-4",
+                    "hover:border-neutral-700 outline-none gap-4 md:min-w-40",
                   )}
                 >
                   <div className="hidden sm:block">
@@ -354,7 +369,7 @@ const Navbar = () => {
                   "hover:bg-gray-100 rounded-md text-xs p-2",
                   "w-28 font-[CircularMedium] flex justify-center items-center"
                 )}
-                onClick={submitPaste}
+                onClick={submitDocument}
                 disabled={submitLoading}
               >
                 {submitLoading ?

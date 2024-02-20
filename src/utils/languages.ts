@@ -9,14 +9,12 @@ import {
   CsharpPlain,
   Html5Plain,
   Css3Plain,
-  CoffeescriptOriginal,
-  ClojureOriginal,
   FsharpPlain,
   GraphqlPlain,
   JavaPlain,
   KotlinPlain,
   LuaPlain,
-  MysqlOriginal,
+  YamlPlain,
   PerlPlain,
   PhpPlain,
   RPlain,
@@ -26,7 +24,26 @@ import {
   ObjectivecPlain,
   DockerPlain,
   LessPlainWordmark,
+  XmlPlain,
+  VisualbasicPlain,
+  AzurePlain,
+  AzuresqldatabasePlain,
+  BashPlain,
+  PowershellPlain,
+  PostgresqlPlain,
+  JsonPlain,
 } from "devicons-react"
+
+import {
+  ApexIcon,
+  ClojureIcon,
+  CoffeeScriptIcon,
+  HandlebarsIcon,
+  MarkdownIcon,
+  MySqlIcon,
+  RustIcon,
+  SASSIcon
+} from "./icons"
 
 
 const Languages = [
@@ -83,12 +100,12 @@ const Languages = [
   {
     label: "Coffee Script",
     value: "coffeescript",
-    icon: CoffeescriptOriginal,
+    icon: CoffeeScriptIcon,
   },
   {
     label: "Clojure",
     value: "clojure",
-    icon: ClojureOriginal,
+    icon: ClojureIcon,
   },
   {
     label: "F#",
@@ -103,7 +120,7 @@ const Languages = [
   {
     label: "Handlebars",
     value: "handlebars",
-    icon: GlobeIcon,
+    icon: HandlebarsIcon,
   },
   {
     label: "Java",
@@ -128,7 +145,7 @@ const Languages = [
   {
     label: "MySQL",
     value: "mysql",
-    icon: MysqlOriginal,
+    icon: MySqlIcon,
   },
   {
     label: "Perl",
@@ -158,7 +175,7 @@ const Languages = [
   {
     label: "Rust",
     value: "rust",
-    icon: GlobeIcon,
+    icon: RustIcon,
   },
   {
     label: "Swift",
@@ -178,12 +195,12 @@ const Languages = [
   {
     label: "Apex",
     value: "apex",
-    icon: GlobeIcon,
+    icon: ApexIcon,
   },
   {
     label: "Azcli",
     value: "azcli",
-    icon: GlobeIcon,
+    icon: AzurePlain,
   },
   {
     label: "Bat",
@@ -191,7 +208,7 @@ const Languages = [
     icon: GlobeIcon,
   },
   {
-    label: "Csp",
+    label: "CSP",
     value: "csp",
     icon: GlobeIcon,
   },
@@ -203,12 +220,12 @@ const Languages = [
   {
     label: "JSON",
     value: "json",
-    icon: GlobeIcon,
+    icon: JsonPlain,
   },
   {
     label: "Markdown",
     value: "markdown",
-    icon: GlobeIcon,
+    icon: MarkdownIcon,
   },
   {
     label: "Msdax",
@@ -221,9 +238,9 @@ const Languages = [
     icon: GlobeIcon,
   },
   {
-    label: "PGSQL",
+    label: "PostgreSQL",
     value: "pgsql",
-    icon: GlobeIcon,
+    icon: PostgresqlPlain,
   },
   {
     label: "Postiats",
@@ -238,7 +255,7 @@ const Languages = [
   {
     label: "Powershell",
     value: "powershell",
-    icon: GlobeIcon,
+    icon: PowershellPlain,
   },
   {
     label: "Pug",
@@ -268,12 +285,12 @@ const Languages = [
   {
     label: "SCSS",
     value: "scss",
-    icon: GlobeIcon,
+    icon: SASSIcon,
   },
   {
     label: "Shell",
     value: "shell",
-    icon: GlobeIcon,
+    icon: BashPlain,
   },
   {
     label: "SOL",
@@ -283,10 +300,10 @@ const Languages = [
   {
     label: "SQL",
     value: "sql",
-    icon: GlobeIcon,
+    icon: AzuresqldatabasePlain,
   },
   {
-    label: "St",
+    label: "ST",
     value: "st",
     icon: GlobeIcon,
   },
@@ -298,17 +315,17 @@ const Languages = [
   {
     label: "VB",
     value: "vb",
-    icon: GlobeIcon,
+    icon: VisualbasicPlain,
   },
   {
     label: "XML",
     value: "xml",
-    icon: GlobeIcon,
+    icon: XmlPlain,
   },
   {
     label: "YAML",
     value: "yaml",
-    icon: GlobeIcon,
+    icon: YamlPlain,
   },
 ]
 export default Languages
