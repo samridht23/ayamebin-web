@@ -313,7 +313,7 @@ const Languages = [
     icon: GlobeIcon,
   },
   {
-    label: "VB",
+    label: "Visual Basic",
     value: "vb",
     icon: VisualbasicPlain,
   },
