@@ -31,18 +31,18 @@ const Paste = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/document/${urlParams.pasteId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/document/${urlParams.document_id}`, {
         method: 'GET'
       })
       if (response.ok) {
         const data = await response.json()
-        setEditorData(data.paste_data)
-        setEditorLanguage(data.lang)
-        updateLanguage(data.lang)
-        updateDuplicateData(data.paste_data)
+        setEditorData(data.document)
+        setEditorLanguage(data.language)
+        updateLanguage(data.language)
+        updateDuplicateData(data.document)
 
         setEditorLoading(false)
-      } else if (response.status === 400) {
+      } else if (response.status === 404) {
         setEditorLoading(false)
         setDocNotFound(true)
       }
@@ -53,8 +53,8 @@ const Paste = () => {
       }
     }
     catch (error) {
-      toast.error("Error fetching document.")
-      console.log("Error fetching document:", error)
+      toast.error("Error fetching document")
+      console.log("Error fetching document", error)
     }
   }
 

@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         index: true
       },
       {
-        path: "/:pasteId",
+        path: "/:document_id",
         element: <Paste />
       },
     ]

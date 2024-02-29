@@ -57,6 +57,7 @@ const expiryOptions: ExpiryOption[] = [
 ]
 
 const Navbar = () => {
+
   const { duplicateData, editorData, language, updateLanguage, updateEditorData } = zustStore()
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -80,9 +81,9 @@ const Navbar = () => {
 
   const submitDocument = async () => {
     const data = {
-      lang: language,
-      expirey: expireOption,
-      paste_data: editorData
+      language: language,
+      expiration_unit: expireOption,
+      document: editorData
     }
     try {
       setSubmitDisabled(true)
@@ -101,7 +102,7 @@ const Navbar = () => {
             action: {
               label: "Copy Link",
               onClick: () => {
-                navigator.clipboard.writeText(`${import.meta.env.VITE_BASE_URL}/${data.paste_id}`)
+                navigator.clipboard.writeText(`${import.meta.env.VITE_BASE_URL}/${data.document_id}`)
               }
             }
           })
@@ -110,7 +111,7 @@ const Navbar = () => {
           setSubmitDisabled(false)
           updateEditorData("")
           updateLanguage("")
-          navigate(`/${data.paste_id}`)
+          navigate(`/${data.document_id}`)
         }
       } else {
         setSubmitDisabled(false)
