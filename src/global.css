@@ -14,9 +14,13 @@
   font-family: 'CircularBold';
   src: url('/fonts/CircularBookBold.woff2') format('woff2');
 }
+@font-face {
+  font-family: 'JetBrains';
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}
 
 :root{
-  font-family: Circular,Arial, system-ui, Avenir, Helvetica, Inter, sans-serif;
+  font-family: JetBrains ,Arial, system-ui, Avenir, Helvetica, Inter, sans-serif;
   color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

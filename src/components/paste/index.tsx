@@ -19,6 +19,7 @@ const Paste = () => {
     },
     quickSuggestions: false,
     readOnly: true,
+    fontFamily: 'JetBrains',
   }
 
   loader.init().then(async (monaco) => {

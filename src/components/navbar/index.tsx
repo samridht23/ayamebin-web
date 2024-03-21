@@ -130,7 +130,7 @@ const Navbar = () => {
       return Languages;
     }
     return Languages.filter((lang) => {
-      return lang.value.includes(searchTerm.toLowerCase());
+      return lang.keyword.some(keyword => keyword.includes(searchTerm.toLowerCase()));
     })
   }, [searchTerm]);
 
@@ -317,7 +317,7 @@ const Navbar = () => {
                           "bg-[#0a0a0a] border border-neutral-800 text-[#FAFAFA]",
                           "text-sm rounded-lg hover:border-neutral-700 ",
                           "focus:border-neutral-700 outline-none block",
-                          "w-full p-2.5 placeholder-neutral-400"
+                          "w-full p-2.5 placeholder-neutral-400 font-[Circular]"
                         )}
                         placeholder="Search Language"
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -331,7 +331,7 @@ const Navbar = () => {
                             "flex items-center rounded-lg border p-4",
                             "gap-4 hover:cursor-pointer h-14",
                             {
-                              "border-neutral-400": data.value === language,
+                              "border-neutral-700 bg-neutral-900": data.value === language,
                               "border-neutral-800": data.value != language,
                               "hover:border-neutral-700": data.value != language
                             }

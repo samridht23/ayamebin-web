@@ -7,6 +7,7 @@ const opts: editor.IStandaloneEditorConstructionOptions = {
   minimap: {
     enabled: false,
   },
+  fontFamily: 'JetBrains',
   quickSuggestions: false,
 }
 
