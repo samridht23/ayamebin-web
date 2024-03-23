@@ -381,7 +381,7 @@ const Languages = [
     label: "YAML",
     value: "yaml",
     icon: YamlPlain,
-    keyword: ["yaml", "yet another markup language", "markup"],
+    keyword: ["yaml", "yet another markup language", "markup", "yml"],
   },
 ]
 export default Languages

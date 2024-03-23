@@ -18,7 +18,6 @@ import {
 } from "react-router-dom";
 import { zustStore } from "../../App";
 import Languages from "../../utils/languages";
-import Logo from "../logo/"
 import clsx from "clsx"
 import { toast } from 'sonner'
 
@@ -58,7 +57,7 @@ const expiryOptions: ExpiryOption[] = [
 
 const Navbar = () => {
 
-  const { duplicateData, editorData, language, updateLanguage, updateEditorData } = zustStore()
+  const { duplicateData, editorData, language, updateLanguage, updateEditorData, responseNotFound } = zustStore()
 
   const [searchTerm, setSearchTerm] = useState('');
   const [expireOption, setExpireOption] = useState('168');
@@ -154,48 +153,50 @@ const Navbar = () => {
       "bg-black border-neutral-800"
     )}>
       <Link to="/" className="flex items-center gap-2">
-        <Logo size="22" />
-        <div className="text-md font-[CircularBold] hidden sm:block">Ayamebin</div>
+        <div className="text-lg font-[CircularBold]">s0xt</div>
       </Link>
       <div>
         <div className="flex gap-2">
           {location.pathname !== '/' &&
             <>
-              <Tooltip.Provider delayDuration={100}>
-                <Tooltip.Root>
-                  <Tooltip.Trigger asChild>
-                    <button
-                      onClick={handleDuplicate}
-                      className={clsx(
-                        "border border-neutral-800",
-                        "hover:border-neutral-700 hover:bg-neutral-900",
-                        "p-2 flex items-center rounded"
-                      )}>
-                      <CopyIcon
-                        strokeWidth={1.5}
-                        size={"18"}
-                        color="white"
-                      />
-                    </button>
-                  </Tooltip.Trigger>
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      className={clsx(
-                        "z-50 overflow-hidden rounded border border-neutral-800 bg-black",
-                        "bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
-                        "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out",
-                        "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
-                        "data-[side=bottom]:slide-in-from-top-2",
-                        "data-[side=left]:slide-in-from-right-2",
-                        "data-[side=right]:slide-in-from-left-2",
-                        "data-[side=top]:slide-in-from-bottom-2",
-                      )}>
-                      Duplicate Document
-                      <Tooltip.Arrow />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>
-              </Tooltip.Provider>
+              {
+                !responseNotFound &&
+                <Tooltip.Provider delayDuration={100}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={handleDuplicate}
+                        className={clsx(
+                          "border border-neutral-800",
+                          "hover:border-neutral-700 hover:bg-neutral-900",
+                          "p-2 flex items-center rounded"
+                        )}>
+                        <CopyIcon
+                          strokeWidth={1.5}
+                          size={"18"}
+                          color="white"
+                        />
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        className={clsx(
+                          "z-50 overflow-hidden rounded border border-neutral-800 bg-black",
+                          "bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
+                          "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out",
+                          "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+                          "data-[side=bottom]:slide-in-from-top-2",
+                          "data-[side=left]:slide-in-from-right-2",
+                          "data-[side=right]:slide-in-from-left-2",
+                          "data-[side=top]:slide-in-from-bottom-2",
+                        )}>
+                        Duplicate Document
+                        <Tooltip.Arrow />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+              }
               <Tooltip.Provider delayDuration={100}>
                 <Tooltip.Root>
                   <Tooltip.Trigger>
@@ -225,43 +226,47 @@ const Navbar = () => {
                   </Tooltip.Portal>
                 </Tooltip.Root>
               </Tooltip.Provider>
-              <Tooltip.Provider delayDuration={100}>
-                <Tooltip.Root>
-                  <Tooltip.Trigger>
-                    <div className={clsx(
-                      "border border-neutral-800",
-                      "p-2 flex items-center rounded"
-                    )}>
-                      {
-                        languageState && (
-                          <languageState.icon
-                            strokeWidth={1.5}
-                            size={"18"}
-                            color="white"
-                            className="rounded"
-                          />
-                        )
-                      }
-                    </div>
-                  </Tooltip.Trigger>
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      className={clsx(
-                        "z-50 overflow-hidden rounded border border-neutral-800 bg-black",
-                        "bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
-                        "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out",
-                        "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
-                        "data-[side=bottom]:slide-in-from-top-2",
-                        "data-[side=left]:slide-in-from-right-2",
-                        "data-[side=right]:slide-in-from-left-2",
-                        "data-[side=top]:slide-in-from-bottom-2",
+
+              {
+                !responseNotFound &&
+                <Tooltip.Provider delayDuration={100}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger>
+                      <div className={clsx(
+                        "border border-neutral-800",
+                        "p-2 flex items-center rounded"
                       )}>
-                      {languageState?.label}
-                      <Tooltip.Arrow />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>
-              </Tooltip.Provider>
+                        {
+                          languageState && (
+                            <languageState.icon
+                              strokeWidth={1.5}
+                              size={"18"}
+                              color="white"
+                              className="rounded"
+                            />
+                          )
+                        }
+                      </div>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        className={clsx(
+                          "z-50 overflow-hidden rounded border border-neutral-800 bg-black",
+                          "bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-md",
+                          "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out",
+                          "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+                          "data-[side=bottom]:slide-in-from-top-2",
+                          "data-[side=left]:slide-in-from-right-2",
+                          "data-[side=right]:slide-in-from-left-2",
+                          "data-[side=top]:slide-in-from-bottom-2",
+                        )}>
+                        {languageState?.label}
+                        <Tooltip.Arrow />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+              }
             </>
           }
           {location.pathname === '/' &&

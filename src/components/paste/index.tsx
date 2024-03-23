@@ -28,7 +28,7 @@ const Paste = () => {
 
   var urlParams = useParams()
 
-  const { updateDuplicateData, updateLanguage } = zustStore()
+  const { updateDuplicateData, updateLanguage, updateResponseNotFound } = zustStore()
 
   const fetchData = async () => {
     try {
@@ -41,11 +41,12 @@ const Paste = () => {
         setEditorLanguage(data.language)
         updateLanguage(data.language)
         updateDuplicateData(data.document)
-
+        updateResponseNotFound(false)
         setEditorLoading(false)
       } else if (response.status === 404) {
         setEditorLoading(false)
         setDocNotFound(true)
+        updateResponseNotFound(true)
       }
       else {
         setEditorLoading(false)
@@ -73,7 +74,7 @@ const Paste = () => {
             <div className="flex flex-col w-full justify-center items-center">
               <div className={clsx(
                 "flex flex-col w-5/6 sm:w-3/4 md:w-2/5 border",
-                "rounded-md border-neutral-800 p-4 sm:p-6 bg-black"
+                "rounded-md border-neutral-800 p-4 sm:p-6 bg-black font-[Circular]"
               )}>
                 <div className="text-neutral-400">
                   <span className="font-[CircularBold]">Error :</span> 404 Not Found
